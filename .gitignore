@@ -4,6 +4,4 @@
 # environment file
 .env
 
-tmp/**
-
 node_modules/
