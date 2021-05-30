@@ -28,8 +28,20 @@ const rss = {
     ]
 };
 
+const xml = {
+    options: {
+        attributeNamePrefix: "",
+        attrNodeName: "attr",
+        textNodeName: "text",
+        trimValues: true,
+        parseAttributeValue: true,
+        ignoreAttributes: false,
+    },
+};
+
 const config = {
   rss,
+  xml,
 };
 
 module.exports = config;
