@@ -1,0 +1,9 @@
+# any log files
+**.log*
+
+# environment file
+.env
+
+tmp/**
+
+node_modules/
