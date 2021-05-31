@@ -1,10 +1,11 @@
-console.log(new Date().toLocaleString('my-MM', { timeZone: 'Asia/Yangon' }));
+const STARTTIME = Date.now();
+console.log('start: ', new Date().toLocaleString('my-MM', { timeZone: 'Asia/Yangon' }));
 
 const fetch = require('node-fetch');
 const zg = require('is-zawgyi');
 const { zg2uni } = require("rabbit-node");
 const { parse } = require("fast-xml-parser");
-const { feed, xml } = require('./config');
+const { rss: { feed }, xml } = require('./config');
 
 function rssfeed(url) {
   return fetch(url).then(res => res.text()).then(res => parse(res, xml.options));
@@ -20,10 +21,15 @@ function convert(font) {
 
 /**------------**/
 !async function () {
-  let feeds = [];
+  let rss = [];
   
-  await rss.feed.map(async (feed) => {});
+  await feed.map(
+    async (url) => rss.push( await rssfeed(url) )
+  );
   
-}();
+  console.log(rss)
+  
+}().finally(
+  () => console.log('exit: %dms | %s', Date.now() - STARTTIME, new Date().toLocaleString('my-MM', { timeZone: 'Asia/Yangon' }))
+)
 
-console.log(new Date().toLocaleString('my-MM', { timeZone: 'Asia/Yangon' }));
