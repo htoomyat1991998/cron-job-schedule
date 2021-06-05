@@ -17,4 +17,7 @@ getVideoInfo('https://www.youtube.com/watch?v=WiwfiVdfRIc')
     });
     let { video_id } = await updateLiveStream(id);
     exec(`ffmpeg -re -i '${format.url}' -c:v libx264 -preset veryfast -tune zerolatency -c:a aac -ar 44100 -f flv '${stream_url}'`);
+  }).catch(e => {
+    console.log(e.response?.headers, e.response?.data);
+    console.log(e.message);
   });
