@@ -3,10 +3,12 @@
   "license": "MTI",
   "main": "index.js",
   "dependencies": {
-    "fast-xml-parser": "^3.19.0",
+    "axios": "^0.21.1",
     "is-zawgyi": "^1.0.3",
-    "linkedom": "^0.9.2",
-    "node-fetch": "^2.6.1",
-    "rabbit-node": "^1.0.4"
+    "node-cron": "^3.0.0",
+    "rabbit-node": "^1.0.4",
+    "shelljs": "^0.8.4",
+    "yt-search": "^2.8.0",
+    "ytdl-core": "^4.8.2"
   }
 }
