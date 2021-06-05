@@ -10,7 +10,6 @@ getVideoInfo('https://www.youtube.com/watch?v=WiwfiVdfRIc')
   .then(async ({ title, channelName, content, formats }) => {
     let format = formats[0];
     if (!format) throw "no video source is available.";
-    console.log(await (await axios(FACEBOOK_GRAPH_URL + '/me?access_token=' + FACEBOOK_PAGE_TOKEN)).data)
     let { id, stream_url } = await createLiveStream({
       title: `${title} - ${channelName}`,
       description: content,
