@@ -19,7 +19,6 @@ async function getVideoInfo(youtube_url) {
         hasAudio,
         hasVideo
     }) => hasAudio && hasVideo && ['ts', 'mp4'].includes(container));
-    console.log(data.formats);
     return data;
 }
 
