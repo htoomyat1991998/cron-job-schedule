@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}\\src\\getVideoInfo.js"
+      "program": "${workspaceFolder}\\live-stream.js"
     }
   ]
 }
