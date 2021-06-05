@@ -1,6 +1,8 @@
 let FACEBOOK_PAGE_TOKEN;
 
-switch (process.argv[2]) {
+const env = process.argv[2];
+
+switch (env) {
   case "main":
     FACEBOOK_PAGE_TOKEN = process.env.FACEBOOK_MAIN_TOKEN;
     break;
