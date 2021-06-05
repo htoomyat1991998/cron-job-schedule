@@ -10,7 +10,7 @@ async function updateLiveStream(id) {
         embeddable: false,
     };
     let { data: { video } } = await axios.post(url, data);
-    console.log('[FB]', 'updated live video', video.id);
+    console.log('[FB] updated live video, watch live stream at: https://www.facebook.com/watch/live/?v=%s', video.id);
     return { video_id: video.id }
 }
 
