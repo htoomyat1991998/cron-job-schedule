@@ -4,9 +4,7 @@ const updateLiveStream = require('./src/updateLiveStream');
 
 const { exec } = require('shelljs');
 
-let youtube_id = process.argv.slice(2)[0];
-
-getVideoInfo(`https://www.youtube.com/watch?v=${youtube_id}`)
+getVideoInfo(`https://www.youtube.com/watch?v=${process.argv[3]}`)
   .then(async ({ title, channelName, content, formats }) => {
     let format = formats[0];
     if (!format) throw "no video source is available.";
