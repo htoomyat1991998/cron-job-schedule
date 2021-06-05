@@ -4,9 +4,9 @@ const updateLiveStream = require('./src/updateLiveStream');
 
 const { exec } = require('shelljs');
 
-getVideoInfo('https://www.youtube.com/watch?v=WiwfiVdfRIc&t=342s')
+getVideoInfo('https://www.youtube.com/watch?v=WiwfiVdfRIc')
   .then(async ({ title, channelName, content, formats }) => {
-    let format = formats.filter(({ hasVideo, hasAudio }) => hasVideo && hasAudio)[0];
+    let format = formats[0];
     if (!format) throw "no video source is available.";
     let { id, stream_url } = await createLiveStream({
       title: `${title} - ${channelName}`,
