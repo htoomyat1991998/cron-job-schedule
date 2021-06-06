@@ -19,7 +19,7 @@ getVideoInfo(url)
     let cmd = [
       `ffmpeg -re -i '${format.url}' -deinterlace -c:v libx264`,
       '-preset fast -b:v 2500k',//-r 30 -g 60 
-      '-a:c aac -ar 44100 -threads 6 -qscale 3 -b:a 128k',
+      '-c:a aac -ar 44100 -threads 6 -qscale 3 -b:a 128k',
       `-bufsize 512k -f flv '${stream_url}'`,
     ].join(' ');
     try {
