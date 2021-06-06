@@ -7,16 +7,17 @@ const url = input.length === '11' ? `https://www.youtube.com/watch?v=${input}` :
 
 getVideoInfo(url)
     .then(async ({ title, channelName, description, url, formats, thumbnail }) => {
-        let format = formats.map(({ container }) => container === 'mp4')[0];
+        let format = formats.filter(({ container }) => container === 'mp4')[0];
         if (!format) throw "no video source is available.";
         const { data: { id } } = await axios(`${FACEBOOK_GRAPH_URL}/me?access_token=${FACEBOOK_PAGE_TOKEN}`);
-        facebookApiVideoUpload({
+        const data = await facebookApiVideoUpload({
             id,
             token: FACEBOOK_PAGE_TOKEN,
             stream: (await axios({ url: format.url, responseType: 'stream' })).data,
             title: `${title} - ${channelName}`,
             description: `${title}\n\n${description}\n\nOriginally uploaded from ${channelName} at ${url}\n\n#NweOoBot`,
         });
+        console.log(data);
     }).catch(e => {
         console.log(e.response?.headers, e.response?.data);
         console.log(e.message);
