@@ -1,4 +1,4 @@
-name: Worker
+name: Live Stream [TEST]
 on:
   # push:
   #   schedule:
@@ -10,7 +10,7 @@ on:
       youtube_id:
         required: true
 jobs:
-  LiveStreamTest:
+  live_stream:
     runs-on: ubuntu-latest
     env:
       FACEBOOK_MAIN_TOKEN: ${{ secrets.FACEBOOK_MAIN_TOKEN }}
