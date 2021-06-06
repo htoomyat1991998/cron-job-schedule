@@ -4,6 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.21.1",
+    "child_process": "^1.0.2",
     "is-zawgyi": "^1.0.3",
     "node-cron": "^3.0.0",
     "rabbit-node": "^1.0.4",
