@@ -1,0 +1,25 @@
+name: Upload Video
+on:
+  # push:
+  #   schedule:
+  #     - cron: "* * * * *"
+  workflow_dispatch:
+    inputs:
+      channel:
+        required: true
+      youtube_id:
+        required: true
+jobs:
+  video_upload:
+    runs-on: ubuntu-latest
+    env:
+      FACEBOOK_MAIN_TOKEN: ${{ secrets.FACEBOOK_MAIN_TOKEN }}
+      FACEBOOK_TEST_TOKEN: ${{ secrets.FACEBOOK_TEST_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.16.0
+      - run: npm install
+      - run: |
+          node upload-video.js '${{ github.event.inputs.channel }}' '${{ github.event.inputs.youtube_id }}'

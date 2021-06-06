@@ -22,13 +22,7 @@ getVideoInfo(url)
       '-c:a aac -ar 44100 -b:a 128k',
       `-bufsize 512k -f flv '${stream_url}'`,
     ].join(' ');
-    try {
-      exec(cmd)
-    } catch (e) {
-      console.error(e);
-      console.error('Failed to stream live!', id);
-      await deleteLiveStream(id);
-    }
+    exec(cmd)
   }).catch(e => {
     console.log(e.response?.headers, e.response?.data);
     console.log(e.message);
