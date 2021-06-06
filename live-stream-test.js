@@ -19,8 +19,8 @@ getVideoInfo(url)
     let cmd = [
       `ffmpeg -re -i '${format.url}' -deinterlace -vcodec libx264`,
       '-pix_fmt yuv420p -preset medium -r 30 -g 60 -b:v 2500k',
-      '-acodec libfdk_aac -b:a 128k -ar 44100 -threads 6 -qscale 3 -b:a',
-      `712000 -bufsize 512k -f flv '${stream_url}'`,
+      '-acodec libfdk_aac -ar 44100 -threads 6 -qscale 3 -b:a 128k',
+      `-bufsize 512k -f flv '${stream_url}'`,
     ].join(' ');
     exec(cmd).on('error', async (err) => {
       console.error(err);
