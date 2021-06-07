@@ -7,11 +7,13 @@ const [/* node */, /* __filename */, /* env */, source_url, youtube_id, payload]
 
 !async function () {
     let title, description;
-    if (youtube_id) {
+    if (youtube_id && youtube_id.length > 5) {
+        console.log('a');
         const { videoDetails } = await getBasicInfo(youtube_id)
         title = videoDetails.title
         description = `${videoDetails.title}\n\n${videoDetails.description}\n\nOriginally uploaded from ${videoDetails.ownerChannelName} at ${videoDetails.video_url}\n\n#NweOoBot #NweOoLive`
     } else {
+        console.log('b');
         const data = JSON.parse(payload);
         title = data.title;
         description = `${data.title}\n\n${data.description}\n\n#NweOoBot #NweOoLive`
