@@ -3,7 +3,6 @@ const createLiveStream = require('./src/createLiveStream');
 const updateLiveStream = require('./src/updateLiveStream');
 const deleteLiveStream = require('./src/deleteLiveStream');
 
-const { exec } = require('shelljs');
 const { optimizeLiveStream } = require('./src/_helpers');
 const input = process.argv[3];
 const url = input.length === '11' ? `https://www.youtube.com/watch?v=${input}` : input;
