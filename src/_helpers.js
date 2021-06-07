@@ -1,3 +1,6 @@
+const { exec } = require('shelljs');
+const { exec: execBG } = require('child_process');
+
 function saveLiveStream(input, output) {
     console.log('[1/2] saving live streaming video to local file at %s', output);
     return execBG(`ffmpeg -i '${input}' -c:v libx264 -b:v 5M -bufsize 5M -maxrate 5M -threads 32 -g 120 -r 60 -c:a aac -ar 44100 '${output}' -y`)

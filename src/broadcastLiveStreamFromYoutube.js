@@ -1,4 +1,4 @@
-const { exec, cat } = require('shelljs');
+const { exec } = require('shelljs');
 const { exec: execBG } = require('child_process');
 const getVideoInfo = require("./getVideoInfo");
 const createLiveStream = require("./createLiveStream");
