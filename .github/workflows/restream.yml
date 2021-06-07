@@ -9,10 +9,8 @@ on:
         required: true
       source_url:
         required: true
-      youtube_id:
-        required: false
       payload:
-        required: false
+        required: true
 jobs:
   live_stream:
     runs-on: ubuntu-latest
@@ -27,4 +25,4 @@ jobs:
           node-version: 14.16.0
       - run: npm install
       - run: |
-          node re-stream.js '${{ github.event.inputs.channel }}' '${{ github.event.inputs.youtube_id }}' '${{ github.event.inputs.payload }}'
+          node re-stream.js '${{ github.event.inputs.channel }}' '${{ github.event.inputs.payload }}'

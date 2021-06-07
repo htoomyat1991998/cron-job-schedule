@@ -1,22 +1,21 @@
-const { exec } = require('shelljs');
+const { exec, cat } = require('shelljs');
 const createLiveStream = require("./src/createLiveStream");
 const updateLiveStream = require("./src/updateLiveStream");
 const { getBasicInfo } = require('ytdl-core');
 
-const [/* node */, /* __filename */, /* env */, source_url, youtube_id, payload] = process.argv;
+const [/* node */, /* __filename */, /* env */, source_url, payload] = process.argv;
 
 !async function () {
     let title, description;
-    if (youtube_id && youtube_id.length > 5) {
-        console.log('a');
-        const { videoDetails } = await getBasicInfo(youtube_id)
-        title = videoDetails.title
-        description = `${videoDetails.title}\n\n${videoDetails.description}\n\nOriginally uploaded from ${videoDetails.ownerChannelName} at ${videoDetails.video_url}\n\n#NweOoBot #NweOoLive`
-    } else {
-        console.log('b');
+    try {
         const data = JSON.parse(payload);
         title = data.title;
         description = `${data.title}\n\n${data.description}\n\n#NweOoBot #NweOoLive`
+    } catch (e) {
+        console.log('b')
+        const { videoDetails } = await getBasicInfo(payload)
+        title = videoDetails.title
+        description = `${videoDetails.title}\n\n${videoDetails.description}\n\nOriginally uploaded from ${videoDetails.ownerChannelName} at ${videoDetails.video_url}\n\n#NweOoBot #NweOoLive`
     }
     const { id, stream_url } = createLiveStream({ title, description })
     const { video_id } = updateLiveStream(id)
