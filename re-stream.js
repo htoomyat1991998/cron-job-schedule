@@ -17,8 +17,9 @@ const [/* node */, /* __filename */, /* env */, source_url, payload] = process.a
         title = videoDetails.title
         description = `${videoDetails.title}\n\n${videoDetails.description}\n\nOriginally uploaded from ${videoDetails.ownerChannelName} at ${videoDetails.video_url}\n\n#NweOoBot #NweOoLive`
     }
-    const { id, stream_url } = createLiveStream({ title, description })
-    const { video_id } = updateLiveStream(id)
+    const { id, stream_url } = await createLiveStream({ title, description })
+    const { video_id } = await updateLiveStream(id)
+    console.log('watch live stream on Facebook at https://facebook.com/watch/live?v=' + video_id);
     const cmd = [
         `ffmpeg -re -i '${source_url}' -c:v libx264`,
         '-preset veryfast -b:v 2500k',//-r 30 -g 60 
