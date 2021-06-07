@@ -19,12 +19,7 @@ const [/* node */, /* __filename */, /* env */, source_url, payload] = process.a
     }
     const { id, stream_url } = await createLiveStream({ title, description })
     const { video_id } = await updateLiveStream(id)
-    console.log('watch live stream on Facebook at https://facebook.com/watch/live?v=' + video_id);
-    const cmd = [
-        `ffmpeg -re -i '${source_url}' -c:v libx264`,
-        '-preset veryfast -b:v 2500k',//-r 30 -g 60 
-        '-c:a aac -ar 44100 -b:a 128k',
-        `-bufsize 512k -f flv '${stream_url}'`,
-    ]
-    exec(cmd.join(' '))
+    // console.log('watch live stream on Facebook at https://facebook.com/watch/live?v=' + video_id);
+    const cmd = `ffmpeg -i '${source_url}' -c copy -f flv '${stream_url}'`
+    exec(cmd)
 }()
