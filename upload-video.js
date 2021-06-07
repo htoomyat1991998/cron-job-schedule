@@ -12,10 +12,10 @@ getVideoInfo(url)
         const { data: { id } } = await axios(`${FACEBOOK_GRAPH_URL}/me?access_token=${FACEBOOK_PAGE_TOKEN}`);
         const data = await facebookApiVideoUpload({
             id,
+            title,
             token: FACEBOOK_PAGE_TOKEN,
             stream: (await axios({ url: format.url, responseType: 'stream' })).data,
-            title: `${title} - ${channelName}`,
-            description: `${title}\n\n${description}\n\nOriginally uploaded from ${channelName} at ${url}\n\n#NweOoBot`,
+            description: `${title}\n\n${description}\n\nOriginally uploaded from Youtube at ${url}\n\n#NweOoBot`,
         });
         console.log(data);
     }).catch(e => {

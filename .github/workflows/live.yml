@@ -1,4 +1,4 @@
-name: Live
+name: Live Stream
 on:
   # push:
   #   schedule:
@@ -7,9 +7,7 @@ on:
     inputs:
       channel:
         required: true
-      cron:
-        required: true
-      search:
+      youtube_id:
         required: true
 jobs:
   live_stream:
@@ -25,4 +23,4 @@ jobs:
           node-version: 14.16.0
       - run: npm install
       - run: |
-          node cron-test.js '${{ github.event.inputs.channel }}' '${{ github.event.inputs.cron }}' '${{ github.event.inputs.search }}'
+          node live-stream.js '${{ github.event.inputs.channel }}' '${{ github.event.inputs.youtube_id }}'
