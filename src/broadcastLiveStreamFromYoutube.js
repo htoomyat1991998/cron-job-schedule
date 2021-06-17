@@ -3,7 +3,7 @@ const { exec: execBG } = require('child_process');
 const getVideoInfo = require("./getVideoInfo");
 const createLiveStream = require("./createLiveStream");
 const updateLiveStream = require("./updateLiveStream");
-const searchUntilLiveOnYoutube = require("./searchUntilLiveOnYoutube");
+const { searchUntilLiveOnYoutube } = require("./_helpers");
 
 module.exports = async function broadcastLiveStreamFromYoutube(q) {
     let live = await searchUntilLiveOnYoutube(q)

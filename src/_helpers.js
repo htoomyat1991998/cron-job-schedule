@@ -1,5 +1,24 @@
 const { exec } = require('shelljs');
 const { exec: execBG } = require('child_process');
+const ytdl = require('ytdl-core');
+const yts = require('yt-search');
+const zg = require('is-zawgyi');
+const { zg2uni } = require('rabbit-node');
+
+function toUnicode(text) {
+    return text.split('\n').map(txt => zg(txt) ? zg2uni(txt) : txt).join('\n');
+}
+
+function createContentForFacebook({
+    title,
+    description,
+    ownerChannelName,
+    video_url,
+}) {
+    title = toUnicode(title);
+    description = toUnicode(description);
+    return `${title}\n\n${description}\n\nOriginally uploaded from ${ownerChannelName} at ${video_url}\n\n#NweOoBot #NweOoLive`;
+}
 
 function saveLiveStream(input, output) {
     console.log('[1/2] saving live streaming video to local file at %s', output);
@@ -18,8 +37,50 @@ function optimizeLiveStream(source_url, path, stream_url, timeout = 30000) {
     }, timeout)
 }
 
+function searchUntilLiveOnYoutube(q) {
+    let refresh_count = 0
+    return new Promise((resolve) => {
+        let search = async () => {
+            let { live } = await yts(q);
+            live = live.filter(({ status }) => status === 'LIVE')
+            if (live.length) {
+                console.log('live stream:', live.length, live[0].videoId)
+                resolve(live)
+            } else {
+                console.log('refresh:', refresh_count++)
+                setTimeout(() => search(), 3000)
+            }
+        }
+        search()
+    })
+}
+
+async function getVideoInfo(youtube_url) {
+    let { videoDetails, formats } = await ytdl.getInfo(youtube_url);
+    let data = {
+        title: toUnicode(videoDetails.title),
+        description: toUnicode(videoDetails.description),
+        thumbnail: videoDetails.thumbnails.pop().url,
+        channelName: videoDetails.ownerChannelName,
+        url: videoDetails.video_url,
+        content: createContentForFacebook(videoDetails),
+        formats: [],
+    };
+    formats = formats.sort((a, b) => b.bitrate - a.bitrate);
+    data.formats = formats.filter(({
+        container,
+        hasAudio,
+        hasVideo
+    }) => hasAudio && hasVideo && ['ts', 'mp4'].includes(container));
+    return data;
+}
+
 module.exports = {
     saveLiveStream,
     broadcastLiveStream,
     optimizeLiveStream,
+    searchUntilLiveOnYoutube,
+    toUnicode,
+    createContentForFacebook,
+    getVideoInfo,
 }
