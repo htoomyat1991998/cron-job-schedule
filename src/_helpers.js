@@ -55,7 +55,25 @@ function searchUntilLiveOnYoutube(q) {
     })
 }
 
+function fetchUntilLiveFromYoutube(youtube_url) {
+    let refresh_count = 0
+    return new Promise((resolve) => {
+        let fetch = async () => {
+            let { formats } = await getVideoInfo(youtube_url);
+            if (formats.length) {
+                console.log('available formats:', formats.length)
+                resolve(formats)
+            } else {
+                console.log('refresh:', refresh_count++)
+                setTimeout(() => fetch(), 3000)
+            }
+        }
+        fetch()
+    })
+}
+
 async function getVideoInfo(youtube_url) {
+    if (youtube_url.length === '11') youtube_url = `https://www.youtube.com/watch?v=${youtube_url}`;
     let { videoDetails, formats } = await ytdl.getInfo(youtube_url);
     let data = {
         title: toUnicode(videoDetails.title),
@@ -83,4 +101,5 @@ module.exports = {
     toUnicode,
     createContentForFacebook,
     getVideoInfo,
+    fetchUntilLiveFromYoutube,
 }

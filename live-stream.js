@@ -1,12 +1,10 @@
-const getVideoInfo = require('./src/getVideoInfo');
+const { broadcastLiveStream, getVideoInfo } = require('./src/_helpers');
 const createLiveStream = require('./src/createLiveStream');
 const updateLiveStream = require('./src/updateLiveStream');
 
-const { broadcastLiveStream } = require('./src/_helpers');
 const input = process.argv[3];
-const url = input.length === '11' ? `https://www.youtube.com/watch?v=${input}` : input;
 
-getVideoInfo(url)
+getVideoInfo(input)
   .then(async ({ title, channelName, content, formats }) => {
     if (!formats.length) throw "no video source is available.";
     let format = formats[0];
