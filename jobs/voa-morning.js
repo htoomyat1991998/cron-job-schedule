@@ -6,16 +6,13 @@ const updateLiveStream = require("../src/updateLiveStream");
 const CRON_SCHEDULE = '4 0 6 * * *';
 const QUERY_STRING = 'ဗီြအိုေအ ျမန္မာနံနက္ခင္း';
 
-let videoId;
-
 schedule(CRON_SCHEDULE, start, { timezone: 'Asia/Rangoon' });
 
 function start() {
     setTimeout(() => process.exit(), 3 * 60 * 60 * 1000); //max. 3hr
 
     searchUntilLiveOnYoutube(QUERY_STRING)
-        .then((live) => {
-            videoId = live[0].videoId;
+        .then(({ videoId }) => {
             return fetchUntilLiveFromYoutube(videoId);
         })
         .then(async ({ title, channelName, content, formats }) => {
