@@ -7,9 +7,7 @@ const deleteLiveStream = require("../src/deleteLiveStream");
 const CRON_SCHEDULE = '0 0 19 * * *'; // 19:00:00.000
 const QUERY_STRING = 'RFA နေ့စဉ်တိုက်ရိုက်ထုတ်လွှင့်ချက်';
 
-// schedule(CRON_SCHEDULE, () => start(), { timezone: 'Asia/Rangoon' });
-
-start()
+schedule(CRON_SCHEDULE, () => start(), { timezone: 'Asia/Rangoon' });
 
 function start() {
     let liveId;
@@ -30,7 +28,7 @@ function start() {
 
             let { video_id } = await updateLiveStream(liveId);
 
-            broadcastLiveStream(format.url, 'stream_url.mp4');
+            broadcastLiveStream(format.url, stream_url);
         })
         .catch(err => {
             console.error(err);
