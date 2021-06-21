@@ -11,20 +11,17 @@ schedule(CRON_SCHEDULE, () => start(), { timezone: 'Asia/Rangoon' });
 
 function start() {
     console.log('> querying "', QUERY_STRING, '" at', new Date().toLocaleString('en-US', { timeZone: 'Asia/Yangon' }));
-    
     searchUntilLiveOnYoutube(QUERY_STRING)
         .then(videoId => fetchUntilLiveFromYoutube(videoId))
         .then(async ({ title, channelName, content, formats }) => {
+            console.log(' >>', new Date().toLocaleString('en-US', { timeZone: 'Asia/Yangon' }));
             let format = formats.find(({ qualityLabel }) => qualityLabel === '720p' || qualityLabel === '480p');
             let { id, stream_url } = await createLiveStream({
                 title: `${title} - ${channelName}`,
                 description: content,
             });
             let { video_id } = await updateLiveStream(id);
-        
-            setTimeout(() => console.log('EXIT') | process.exit(0), 3800 * 1000);
-        
+            console.log(' >>', new Date().toLocaleString('en-US', { timeZone: 'Asia/Yangon' }));
             return broadcastLiveStream(format.url, stream_url);
         });
 }
-
